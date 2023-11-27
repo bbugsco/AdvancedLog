@@ -2,12 +2,15 @@ package com.github.bbugsco.advancedlog.Listeners;
 
 import com.github.bbugsco.advancedlog.AdvancedLog;
 import com.github.bbugsco.advancedlog.Logging.LogType;
+
 import org.bukkit.Location;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class InventoryRelatedListener implements Listener {
 
@@ -19,6 +22,7 @@ public class InventoryRelatedListener implements Listener {
 
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
+
 		// Check enabled
 		if (!plugin.getLogTypeEnabled(LogType.PLAYER_PICKUP_ITEM_CHEST)) return;
 
@@ -26,23 +30,55 @@ public class InventoryRelatedListener implements Listener {
 		if (!(event.getInventory().getHolder() instanceof Chest)) return;
 		if (!(event.getCurrentItem() != null && event.getWhoClicked() instanceof Player)) return;
 
+		// Get required variables
 		Player player = (Player) event.getWhoClicked();
 		Location chestLoc = ((Chest) event.getInventory().getHolder()).getLocation();
 
 		if (chestLoc.getWorld() == null) return;
 
 		// Create log
-		String sb = LogType.PLAYER_PICKUP_ITEM_CHEST.getID() + "," +
+		String log = LogType.PLAYER_PICKUP_ITEM_CHEST.getID() + "," +
 				player.getName() + "," +
 				event.getCurrentItem().getType() + "," +
 				event.getCurrentItem().getAmount() + "," +
 				chestLoc.getBlockX() + "," +
 				chestLoc.getBlockY() + "," +
 				chestLoc.getBlockZ() + "," +
-				chestLoc.getWorld().getName() + ",";
+				chestLoc.getWorld().getName();
 
 		// Send log string to logger
-		plugin.getAdvancedLogger().log(sb);
+		plugin.getAdvancedLogger().log(log);
 
 	}
+
+	@EventHandler
+	public void onItemPick(EntityPickupItemEvent event) {
+
+		// Check enabled
+		if (!plugin.getLogTypeEnabled(LogType.PLAYER_PICKUP_ITEM_DROP)) return;
+
+		if (!(event.getEntity() instanceof Player)) return;
+
+		// Get required variables
+		Player player = (Player) event.getEntity();
+		Location location = player.getLocation();
+		ItemStack pickedUpItem = event.getItem().getItemStack();
+
+		if (location.getWorld() == null) return;
+
+		// Create log
+		String log = LogType.PLAYER_PICKUP_ITEM_DROP.getID() + "," +
+				player.getName() + "," +
+				pickedUpItem.getType() + "," +
+				pickedUpItem.getAmount() + "," +
+				location.getBlockX() + "," +
+				location.getBlockY() + "," +
+				location.getBlockZ() + "," +
+				location.getWorld().getName();
+
+		// Send log string to logger
+		plugin.getAdvancedLogger().log(log);
+
+	}
+
 }

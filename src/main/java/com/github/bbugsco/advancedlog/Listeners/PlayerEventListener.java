@@ -3,10 +3,10 @@ package com.github.bbugsco.advancedlog.Listeners;
 import com.github.bbugsco.advancedlog.AdvancedLog;
 import com.github.bbugsco.advancedlog.Logging.LogType;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -24,18 +24,18 @@ public class PlayerEventListener implements Listener {
     // PlayerJoin log
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+		System.out.println("Player join");
         // Check enabled
         if (!plugin.getLogTypeEnabled(LogType.PLAYER_LOGIN)) return;
 
         // Get required variables
         Player player = event.getPlayer();
         Location location = player.getLocation();
-        World world = location.getWorld();
 
-        if (world == null) return;
+        if (location.getWorld() == null) return;
 
         // Create log
-        String sb = LogType.PLAYER_LOGIN.getID() + "," +
+        String log = LogType.PLAYER_LOGIN.getID() + "," +
                 player.getName() + "," +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
@@ -43,7 +43,7 @@ public class PlayerEventListener implements Listener {
                 location.getWorld().getName();
 
         // Send log string to logger
-        plugin.getAdvancedLogger().log(sb);
+        plugin.getAdvancedLogger().log(log);
     }
 
     // PlayerQuit log
@@ -55,20 +55,22 @@ public class PlayerEventListener implements Listener {
         // Get required variables
         Player player = event.getPlayer();
         Location location = player.getLocation();
-        World world = location.getWorld();
 
-        if (world == null) return;
+        if (location.getWorld() == null) {
+	        System.out.println("nerd check");
+	        return;
+        }
 
         // Create log
-        String sb = LogType.PLAYER_QUIT.getID() + "," +
+        String log = LogType.PLAYER_QUIT.getID() + "," +
                 player.getName() + "," +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
                 location.getBlockZ() + "," +
-                location.getWorld().getName();
+		        location.getWorld().getName();
 
         // Send log string to logger
-        plugin.getAdvancedLogger().log(sb);
+        plugin.getAdvancedLogger().log(log);
     }
 
     // Advancement log
@@ -81,12 +83,12 @@ public class PlayerEventListener implements Listener {
         Player player = event.getPlayer();
 
         // Create log
-        String sb = LogType.PLAYER_ADVANCEMENT.getID() + "," +
+        String log = LogType.PLAYER_ADVANCEMENT.getID() + "," +
                 player.getName() + "," +
 		        event.getAdvancement().getKey();
 
         // Send log string to logger
-        plugin.getAdvancedLogger().log(sb);
+        plugin.getAdvancedLogger().log(log);
     }
 
     // Player command event
@@ -99,12 +101,69 @@ public class PlayerEventListener implements Listener {
         Player player = event.getPlayer();
 
         // Create log
-        String sb = LogType.PLAYER_COMMAND.getID() + "," +
+        String log = LogType.PLAYER_COMMAND.getID() + "," +
                 player.getName() + "," +
 		        event.getMessage();
 
         // Send log string to logger + ","
-        plugin.getAdvancedLogger().log(sb);
+        plugin.getAdvancedLogger().log(log);
     }
+
+	// Player Death
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+
+		// Check enabled
+		if (!plugin.getLogTypeEnabled(LogType.PLAYER_DEATH)) return;
+
+		// Get required variables
+		Player player = event.getEntity();
+		String message = event.getDeathMessage();
+		Location location = player.getLocation();
+
+		if (location.getWorld() == null) return;
+
+		// Create log
+		String log = LogType.PLAYER_DEATH.getID() + "," +
+				player.getName() + "," +
+				message + "," +
+				location.getBlockX() + "," +
+				location.getBlockY() + "," +
+				location.getBlockZ() + "," +
+				location.getWorld().getName();
+
+		// Send log string to logger
+		plugin.getAdvancedLogger().log(log);
+	}
+
+	// Player Kill Player
+	@EventHandler
+	public void onPlayerKillPlayer(PlayerDeathEvent event) {
+
+		// Check enabled
+		if (!plugin.getLogTypeEnabled(LogType.PLAYER_DEATH)) return;
+
+		// Get required variables
+		Player victim = event.getEntity();
+		Location location = victim.getLocation();
+
+		if (victim.getKiller() == null) return;
+		Player killer = victim.getKiller();
+
+		if (location.getWorld() == null) return;
+
+		// Create log
+		String log = LogType.PLAYER_DEATH.getID() + "," +
+				victim.getName() + "," +
+				killer.getName() + "," +
+				location.getBlockX() + "," +
+				location.getBlockY() + "," +
+				location.getBlockZ() + "," +
+				location.getWorld().getName();
+
+		// Send log string to logger
+		plugin.getAdvancedLogger().log(log);
+
+	}
 
 }
