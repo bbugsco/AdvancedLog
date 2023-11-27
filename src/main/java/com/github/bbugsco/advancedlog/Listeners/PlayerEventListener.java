@@ -1,11 +1,15 @@
 package com.github.bbugsco.advancedlog.Listeners;
 
 import com.github.bbugsco.advancedlog.AdvancedLog;
-import com.github.bbugsco.advancedlog.Logging.Types.PlayerJoin;
+import com.github.bbugsco.advancedlog.Logging.LogType;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
 
 public class PlayerEventListener implements Listener {
 
@@ -18,19 +22,57 @@ public class PlayerEventListener implements Listener {
     // PlayerJoin log
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-            plugin.getAdvancedLogger().log(new PlayerJoin(event.getPlayer().getName(), event.getPlayer().getLocation()));
+        // Check enabled
+        if (!plugin.getLogTypeEnabled(LogType.PLAYER_LOGIN)) return;
+
+        // Get required variables
+        Player player = event.getPlayer();
+        Location location = player.getLocation();
+        World world = location.getWorld();
+
+        if (world == null) return;
+
+        // Create log
+        String sb = LogType.PLAYER_LOGIN + "," +
+                player.getName() + "," +
+                location.getBlockX() + "," +
+                location.getBlockY() + "," +
+                location.getBlockZ() + "," +
+                location.getWorld().getName() + ",";
+
+        // Send log string to logger
+        plugin.getAdvancedLogger().log(sb);
     }
 
     // PlayerQuit log
     @EventHandler
     public void onPlayerQuit(PlayerJoinEvent event) {
+        // Check enabled
+        if (!plugin.getLogTypeEnabled(LogType.PLAYER_QUIT)) return;
 
+        // Get required variables
+        Player player = event.getPlayer();
+        Location location = player.getLocation();
+        World world = location.getWorld();
+
+        if (world == null) return;
+
+        // Create log
+        String sb = LogType.PLAYER_QUIT + "," +
+                player.getName() + "," +
+                location.getBlockX() + "," +
+                location.getBlockY() + "," +
+                location.getBlockZ() + "," +
+                location.getWorld().getName() + ",";
+
+        // Send log string to logger
+        plugin.getAdvancedLogger().log(sb);
     }
 
     // Advancement log
     @EventHandler
     public void onPlayerAdvancement(PlayerAdvancementDoneEvent event) {
-        event.getAdvancement().toString();
+        // todo
     }
 
 }

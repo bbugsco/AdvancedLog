@@ -1,4 +1,6 @@
-package com.github.bbugsco.advancedlog;
+package com.github.bbugsco.advancedlog.Logging;
+
+import com.github.bbugsco.advancedlog.AdvancedLog;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -34,7 +36,9 @@ public class Logger {
                     this.plugin.getLogger().info("Created log file " + logFile.getName());
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                e.fillInStackTrace();
+                plugin.getLogger().warning("Failed to create log file " + logFile.getName());
+                plugin.getLogger().warning(e.getMessage());
             }
         }
 
@@ -44,7 +48,9 @@ public class Logger {
             fw = new FileWriter(logFile, true);
             this.writer = new PrintWriter(fw);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
+            plugin.getLogger().warning("Failed to create log file " + logFile.getName());
+            plugin.getLogger().warning(e.getMessage());
         }
     }
 
@@ -57,7 +63,7 @@ public class Logger {
             initializeWriter();
         }
 
-        this.writer.write(System.currentTimeMillis() + " " + logEntry);
+        this.writer.write(System.currentTimeMillis() + "," + logEntry);
         this.writer.flush();
 
     }
