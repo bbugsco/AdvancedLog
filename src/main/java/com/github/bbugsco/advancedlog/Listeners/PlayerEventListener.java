@@ -8,7 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 
 public class PlayerEventListener implements Listener {
@@ -33,12 +35,12 @@ public class PlayerEventListener implements Listener {
         if (world == null) return;
 
         // Create log
-        String sb = LogType.PLAYER_LOGIN + "," +
+        String sb = LogType.PLAYER_LOGIN.getID() + "," +
                 player.getName() + "," +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
                 location.getBlockZ() + "," +
-                location.getWorld().getName() + ",";
+                location.getWorld().getName();
 
         // Send log string to logger
         plugin.getAdvancedLogger().log(sb);
@@ -46,7 +48,7 @@ public class PlayerEventListener implements Listener {
 
     // PlayerQuit log
     @EventHandler
-    public void onPlayerQuit(PlayerJoinEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         // Check enabled
         if (!plugin.getLogTypeEnabled(LogType.PLAYER_QUIT)) return;
 
@@ -58,12 +60,12 @@ public class PlayerEventListener implements Listener {
         if (world == null) return;
 
         // Create log
-        String sb = LogType.PLAYER_QUIT + "," +
+        String sb = LogType.PLAYER_QUIT.getID() + "," +
                 player.getName() + "," +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
                 location.getBlockZ() + "," +
-                location.getWorld().getName() + ",";
+                location.getWorld().getName();
 
         // Send log string to logger
         plugin.getAdvancedLogger().log(sb);
@@ -72,7 +74,37 @@ public class PlayerEventListener implements Listener {
     // Advancement log
     @EventHandler
     public void onPlayerAdvancement(PlayerAdvancementDoneEvent event) {
-        // todo
+        // Check enabled
+        if (!plugin.getLogTypeEnabled(LogType.PLAYER_ADVANCEMENT)) return;
+
+        // Get required variables
+        Player player = event.getPlayer();
+
+        // Create log
+        String sb = LogType.PLAYER_ADVANCEMENT.getID() + "," +
+                player.getName() + "," +
+		        event.getAdvancement().getKey();
+
+        // Send log string to logger
+        plugin.getAdvancedLogger().log(sb);
+    }
+
+    // Player command event
+    @EventHandler
+    public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
+        // Check enabled
+        if (!plugin.getLogTypeEnabled(LogType.PLAYER_COMMAND)) return;
+
+        // Get required variables
+        Player player = event.getPlayer();
+
+        // Create log
+        String sb = LogType.PLAYER_COMMAND.getID() + "," +
+                player.getName() + "," +
+		        event.getMessage();
+
+        // Send log string to logger + ","
+        plugin.getAdvancedLogger().log(sb);
     }
 
 }

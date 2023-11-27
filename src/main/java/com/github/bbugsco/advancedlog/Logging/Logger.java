@@ -63,7 +63,7 @@ public class Logger {
             initializeWriter();
         }
 
-        this.writer.write(System.currentTimeMillis() + "," + logEntry);
+        this.writer.write(System.currentTimeMillis() + "," + logEntry + "\n");
         this.writer.flush();
 
     }

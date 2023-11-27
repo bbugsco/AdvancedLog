@@ -1,5 +1,6 @@
 package com.github.bbugsco.advancedlog;
 
+import com.github.bbugsco.advancedlog.Listeners.InventoryRelatedListener;
 import com.github.bbugsco.advancedlog.Listeners.PlayerEventListener;
 import com.github.bbugsco.advancedlog.Logging.LogType;
 import com.github.bbugsco.advancedlog.Logging.Logger;
@@ -31,9 +32,10 @@ public final class AdvancedLog extends JavaPlugin {
         // Register Events
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerEventListener(this), this);
+		pm.registerEvents(new InventoryRelatedListener(this), this);
 
         // Run tasks
-        if (getLogTypeEnabled(LogType.PLAYER_LOCATION)) new LocationLogTask(this).runTaskTimerAsynchronously(this, 1L, getConfig().getLong("log_intervals.PLAYER_LOCATION"));
+        if (getLogTypeEnabled(LogType.PLAYER_LOCATION)) new LocationLogTask(this).runTaskTimerAsynchronously(this, 1L, getConfig().getLong("log_intervals.PLAYER_LOCATION") * 20);
 
         // Log Start
         if(getLogTypeEnabled(LogType.SERVER_START)) getAdvancedLogger().log(String.valueOf(LogType.SERVER_START.getID()));
