@@ -13,6 +13,16 @@ Example for player "bbugsco" quit at postition 100, 74, -36 in world "world"
 > 1701098079565,1,bbugsco,100,74,36,world
 - A seperate program should be used to analyize logs rather than reading logs themselves
 
+## All log types
+- ID 0: Player Login
+  > timestamp,0,username,x,y,z,world
+- ID 1: Player Quit
+  > timestamp,1,username,x,y,z,world
+- ID 2: Player Advancement
+ > timestamp,2,username,advancementky
+- ID 3: Player Command
+  > timestamp,3,username,command
+
 ## Default config:
 ```YML
 # Path to log folder
