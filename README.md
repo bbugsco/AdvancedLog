@@ -19,7 +19,7 @@ Example for player "bbugsco" quit at postition 100, 74, -36 in world "world"
 - ID 1: Player Quit
   > timestamp,1,username,x,y,z,world
 - ID 2: Player Advancement
- > timestamp,2,username,advancementky
+  > timestamp,2,username,advancementky
 - ID 3: Player Command
   > timestamp,3,username,command
 
