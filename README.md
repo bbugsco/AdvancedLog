@@ -19,9 +19,24 @@ Example for player "bbugsco" quit at postition 100, 74, -36 in world "world"
 - ID 1: Player Quit
   > timestamp,1,username,x,y,z,world
 - ID 2: Player Advancement
-  > timestamp,2,username,advancementky
-- ID 3: Player Command
-  > timestamp,3,username,command
+  > timestamp,2,username,advancementkey
+- ID 3: Player Location
+  > timestamp,3,username,x,y,z,world
+- ID 4: Player Command
+  > timestamp,4,username,command
+- ID 5: Player Death
+  > timestamp,5,username,deathmessage,x,y,z,world
+- ID 6: Player Kill Player:
+  > timestamp,6,killed,killer,x,y,z,world
+- ID 7: Player Pickup Item Drop
+  > timestamp,7,username,item,amount,x,y,z,world
+- ID 8: Player Pickup Item Chest
+  > timestamp,8,username,item,amount,chestX,chestY,chestZ,chestWorld
+- ID 9: Server Start
+  > timestamp,9
+- ID 10: Server Stop
+   > timestamp,10
+
 
 ## Default config:
 ```YML
