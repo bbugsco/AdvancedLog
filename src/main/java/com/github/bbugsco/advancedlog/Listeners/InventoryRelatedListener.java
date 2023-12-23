@@ -38,12 +38,12 @@ public class InventoryRelatedListener implements Listener {
 		// Create log
 		String log = LogType.PLAYER_PICKUP_ITEM_CHEST  + " player " +
 				player.getName() + " took " +
-				event.getCurrentItem().getType() + " of " +
-				event.getCurrentItem().getAmount() + " at " +
+				event.getCurrentItem().getAmount() + " of " +
+				event.getCurrentItem().getType() + " (" +
 				chestLoc.getBlockX() + "," +
 				chestLoc.getBlockY() + "," +
 				chestLoc.getBlockZ() + "@" +
-				chestLoc.getWorld().getName();
+				chestLoc.getWorld().getName() + ")";
 
 		// Send log string to logger
 		plugin.getAdvancedLogger().log(log);
@@ -68,12 +68,12 @@ public class InventoryRelatedListener implements Listener {
 		// Create log
 		String log = LogType.PLAYER_PICKUP_ITEM_DROP + " player " +
 				player.getName() + " picked up " +
-				pickedUpItem.getType() + " of " +
-				pickedUpItem.getAmount() + " at " +
+				pickedUpItem.getAmount() + " of " +
+				pickedUpItem.getType() + " (" +
 				location.getBlockX() + "," +
 				location.getBlockY() + "," +
 				location.getBlockZ() + "@" +
-				location.getWorld().getName();
+				location.getWorld().getName() + ")";
 
 		// Send log string to logger
 		plugin.getAdvancedLogger().log(log);
