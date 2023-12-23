@@ -2,3 +2,4 @@ name: AdvancedLog
 version: '${project.version}'
 main: com.github.bbugsco.advancedlog.AdvancedLog
 api-version: '1.20'
+author: bbugsco

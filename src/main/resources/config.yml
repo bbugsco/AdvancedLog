@@ -1,12 +1,11 @@
 # Path to log folder
-log_path: "/configure/path/here"
+log_path: "advanced_logs"
 
 # Enable or disable log types
 log_types:
   PLAYER_JOIN: true
   PLAYER_QUIT: true
   PLAYER_ADVANCEMENT: true
-  PLAYER_LOCATION: true
   PLAYER_COMMAND: true
   PLAYER_DEATH: true
   PLAYER_KILL_PLAYER: true
@@ -14,7 +13,3 @@ log_types:
   PLAYER_PICKUP_ITEM_CHEST: true
   SERVER_START: true
   SERVER_STOP: true
-
-# Configure interval for logs (seconds)
-log_intervals:
-  PLAYER_LOCATION: 60

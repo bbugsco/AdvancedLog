@@ -7,11 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerAdvancementDoneEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-
 
 public class PlayerEventListener implements Listener {
 
@@ -23,7 +18,7 @@ public class PlayerEventListener implements Listener {
 
     // PlayerJoin log
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent event) {
 		System.out.println("Player join");
         // Check enabled
         if (!plugin.getLogTypeEnabled(LogType.PLAYER_LOGIN)) return;
@@ -35,11 +30,11 @@ public class PlayerEventListener implements Listener {
         if (location.getWorld() == null) return;
 
         // Create log
-        String log = LogType.PLAYER_LOGIN.getID() + "," +
-                player.getName() + "," +
+        String log = LogType.PLAYER_LOGIN + " player " +
+                player.getName() + " login at" +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
-                location.getBlockZ() + "," +
+                location.getBlockZ() + "@" +
                 location.getWorld().getName();
 
         // Send log string to logger
@@ -48,7 +43,7 @@ public class PlayerEventListener implements Listener {
 
     // PlayerQuit log
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
+    public void onPlayerQuit(org.bukkit.event.player.PlayerQuitEvent event) {
         // Check enabled
         if (!plugin.getLogTypeEnabled(LogType.PLAYER_QUIT)) return;
 
@@ -56,18 +51,13 @@ public class PlayerEventListener implements Listener {
         Player player = event.getPlayer();
         Location location = player.getLocation();
 
-        if (location.getWorld() == null) {
-	        System.out.println("nerd check");
-	        return;
-        }
-
         // Create log
-        String log = LogType.PLAYER_QUIT.getID() + "," +
-                player.getName() + "," +
+        String log = LogType.PLAYER_QUIT + " player " +
+                player.getName() + " quit at " +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
-                location.getBlockZ() + "," +
-		        location.getWorld().getName();
+                location.getBlockZ() + "@" +
+                (location.getWorld() != null ? location.getWorld().getName() : " ");
 
         // Send log string to logger
         plugin.getAdvancedLogger().log(log);
@@ -75,7 +65,7 @@ public class PlayerEventListener implements Listener {
 
     // Advancement log
     @EventHandler
-    public void onPlayerAdvancement(PlayerAdvancementDoneEvent event) {
+    public void onPlayerAdvancement(org.bukkit.event.player.PlayerAdvancementDoneEvent event) {
         // Check enabled
         if (!plugin.getLogTypeEnabled(LogType.PLAYER_ADVANCEMENT)) return;
 
@@ -83,8 +73,8 @@ public class PlayerEventListener implements Listener {
         Player player = event.getPlayer();
 
         // Create log
-        String log = LogType.PLAYER_ADVANCEMENT.getID() + "," +
-                player.getName() + "," +
+        String log = LogType.PLAYER_ADVANCEMENT + " player " +
+                player.getName() + " got advancement " +
 		        event.getAdvancement().getKey();
 
         // Send log string to logger
@@ -93,7 +83,7 @@ public class PlayerEventListener implements Listener {
 
     // Player command event
     @EventHandler
-    public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommand(org.bukkit.event.player.PlayerCommandPreprocessEvent event) {
         // Check enabled
         if (!plugin.getLogTypeEnabled(LogType.PLAYER_COMMAND)) return;
 
@@ -101,8 +91,8 @@ public class PlayerEventListener implements Listener {
         Player player = event.getPlayer();
 
         // Create log
-        String log = LogType.PLAYER_COMMAND.getID() + "," +
-                player.getName() + "," +
+        String log = LogType.PLAYER_COMMAND + " player " +
+                player.getName() + " attempted command " +
 		        event.getMessage();
 
         // Send log string to logger + ","
@@ -124,12 +114,12 @@ public class PlayerEventListener implements Listener {
 		if (location.getWorld() == null) return;
 
 		// Create log
-		String log = LogType.PLAYER_DEATH.getID() + "," +
-				player.getName() + "," +
-				message + "," +
+		String log = LogType.PLAYER_DEATH + " player " +
+				player.getName() + " died, reason: " +
+				message + " at " +
 				location.getBlockX() + "," +
 				location.getBlockY() + "," +
-				location.getBlockZ() + "," +
+				location.getBlockZ() + "@" +
 				location.getWorld().getName();
 
 		// Send log string to logger
@@ -153,12 +143,12 @@ public class PlayerEventListener implements Listener {
 		if (location.getWorld() == null) return;
 
 		// Create log
-		String log = LogType.PLAYER_DEATH.getID() + "," +
-				victim.getName() + "," +
-				killer.getName() + "," +
+		String log = LogType.PLAYER_DEATH + " player " +
+				victim.getName() + " killed by " +
+				killer.getName() + " at " +
 				location.getBlockX() + "," +
 				location.getBlockY() + "," +
-				location.getBlockZ() + "," +
+				location.getBlockZ() + "@" +
 				location.getWorld().getName();
 
 		// Send log string to logger

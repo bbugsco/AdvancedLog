@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 public class Logger {
 
@@ -54,16 +53,18 @@ public class Logger {
         }
     }
 
-    public void log(String logEntry) {
+    public void log(String log) {
 
         // Check if date is current, if not then update writer
         String date = new Timestamp(System.currentTimeMillis()).toString().split(" ")[0];
-        if (!Objects.equals(this.date, date)) {
+        if (!java.util.Objects.equals(this.date, date)) {
             close();
             initializeWriter();
         }
 
-        this.writer.write(System.currentTimeMillis() + "," + logEntry + "\n");
+        // Create full log string
+        String stringBuilder = "[" + new java.util.Date(System.currentTimeMillis()) + "] " + log + "\n";
+        this.writer.write(stringBuilder);
         this.writer.flush();
 
     }

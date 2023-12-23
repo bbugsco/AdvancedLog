@@ -2,7 +2,6 @@ package com.github.bbugsco.advancedlog.Listeners;
 
 import com.github.bbugsco.advancedlog.AdvancedLog;
 import com.github.bbugsco.advancedlog.Logging.LogType;
-
 import org.bukkit.Location;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
@@ -37,13 +36,13 @@ public class InventoryRelatedListener implements Listener {
 		if (chestLoc.getWorld() == null) return;
 
 		// Create log
-		String log = LogType.PLAYER_PICKUP_ITEM_CHEST.getID() + "," +
-				player.getName() + "," +
-				event.getCurrentItem().getType() + "," +
-				event.getCurrentItem().getAmount() + "," +
+		String log = LogType.PLAYER_PICKUP_ITEM_CHEST  + " player " +
+				player.getName() + " took " +
+				event.getCurrentItem().getType() + " of " +
+				event.getCurrentItem().getAmount() + " at " +
 				chestLoc.getBlockX() + "," +
 				chestLoc.getBlockY() + "," +
-				chestLoc.getBlockZ() + "," +
+				chestLoc.getBlockZ() + "@" +
 				chestLoc.getWorld().getName();
 
 		// Send log string to logger
@@ -67,13 +66,13 @@ public class InventoryRelatedListener implements Listener {
 		if (location.getWorld() == null) return;
 
 		// Create log
-		String log = LogType.PLAYER_PICKUP_ITEM_DROP.getID() + "," +
-				player.getName() + "," +
-				pickedUpItem.getType() + "," +
-				pickedUpItem.getAmount() + "," +
+		String log = LogType.PLAYER_PICKUP_ITEM_DROP + " player " +
+				player.getName() + " picked up " +
+				pickedUpItem.getType() + " of " +
+				pickedUpItem.getAmount() + " at " +
 				location.getBlockX() + "," +
 				location.getBlockY() + "," +
-				location.getBlockZ() + "," +
+				location.getBlockZ() + "@" +
 				location.getWorld().getName();
 
 		// Send log string to logger
