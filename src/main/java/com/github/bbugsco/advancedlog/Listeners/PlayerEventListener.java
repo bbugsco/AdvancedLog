@@ -26,15 +26,13 @@ public class PlayerEventListener implements Listener {
         Player player = event.getPlayer();
         Location location = player.getLocation();
 
-        if (location.getWorld() == null) return;
-
         // Create log
         String log = LogType.PLAYER_LOGIN + " player " +
-                player.getName() + " login at" +
+                player.getName() + " login (" +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
                 location.getBlockZ() + "@" +
-                location.getWorld().getName();
+                (location.getWorld() != null ? location.getWorld().getName() : " ") + ")";
 
         // Send log string to logger
         plugin.getAdvancedLogger().log(log);
