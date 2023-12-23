@@ -19,7 +19,6 @@ public class PlayerEventListener implements Listener {
     // PlayerJoin log
     @EventHandler
     public void onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent event) {
-		System.out.println("Player join");
         // Check enabled
         if (!plugin.getLogTypeEnabled(LogType.PLAYER_LOGIN)) return;
 

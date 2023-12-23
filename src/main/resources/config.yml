@@ -3,7 +3,7 @@ log_path: "advanced_logs"
 
 # Enable or disable log types
 log_types:
-  PLAYER_JOIN: true
+  PLAYER_LOGIN: true
   PLAYER_QUIT: true
   PLAYER_ADVANCEMENT: true
   PLAYER_COMMAND: true
