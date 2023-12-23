@@ -53,11 +53,11 @@ public class PlayerEventListener implements Listener {
 
         // Create log
         String log = LogType.PLAYER_QUIT + " player " +
-                player.getName() + " quit at " +
+                player.getName() + " quit (" +
                 location.getBlockX() + "," +
                 location.getBlockY() + "," +
                 location.getBlockZ() + "@" +
-                (location.getWorld() != null ? location.getWorld().getName() : " ");
+                (location.getWorld() != null ? location.getWorld().getName() : " ") + ")";
 
         // Send log string to logger
         plugin.getAdvancedLogger().log(log);
@@ -71,11 +71,16 @@ public class PlayerEventListener implements Listener {
 
         // Get required variables
         Player player = event.getPlayer();
+        Location location = player.getLocation();
 
         // Create log
         String log = LogType.PLAYER_ADVANCEMENT + " player " +
                 player.getName() + " got advancement " +
-		        event.getAdvancement().getKey();
+		        event.getAdvancement().getKey() + " (" +
+                location.getBlockX() + "," +
+                location.getBlockY() + "," +
+                location.getBlockZ() + "@" +
+                (location.getWorld() != null ? location.getWorld().getName() : " ") + ")";
 
         // Send log string to logger
         plugin.getAdvancedLogger().log(log);
@@ -89,11 +94,17 @@ public class PlayerEventListener implements Listener {
 
         // Get required variables
         Player player = event.getPlayer();
+        Location location = player.getLocation();
 
         // Create log
         String log = LogType.PLAYER_COMMAND + " player " +
                 player.getName() + " attempted command " +
-		        event.getMessage();
+		        event.getMessage()  + " (" +
+                location.getBlockX() + "," +
+                location.getBlockY() + "," +
+                location.getBlockZ() + "@" +
+                (location.getWorld() != null ? location.getWorld().getName() : " ") + ")";
+
 
         // Send log string to logger + ","
         plugin.getAdvancedLogger().log(log);
@@ -111,16 +122,14 @@ public class PlayerEventListener implements Listener {
 		String message = event.getDeathMessage();
 		Location location = player.getLocation();
 
-		if (location.getWorld() == null) return;
-
 		// Create log
 		String log = LogType.PLAYER_DEATH + " player " +
 				player.getName() + " died, reason: " +
-				message + " at " +
-				location.getBlockX() + "," +
-				location.getBlockY() + "," +
-				location.getBlockZ() + "@" +
-				location.getWorld().getName();
+				message + " (" +
+                location.getBlockX() + "," +
+                location.getBlockY() + "," +
+                location.getBlockZ() + "@" +
+                (location.getWorld() != null ? location.getWorld().getName() : " ") + ")";
 
 		// Send log string to logger
 		plugin.getAdvancedLogger().log(log);
@@ -140,16 +149,14 @@ public class PlayerEventListener implements Listener {
 		if (victim.getKiller() == null) return;
 		Player killer = victim.getKiller();
 
-		if (location.getWorld() == null) return;
-
 		// Create log
 		String log = LogType.PLAYER_DEATH + " player " +
 				victim.getName() + " killed by " +
-				killer.getName() + " at " +
+				killer.getName() + " (" +
 				location.getBlockX() + "," +
 				location.getBlockY() + "," +
 				location.getBlockZ() + "@" +
-				location.getWorld().getName();
+                (location.getWorld() != null ? location.getWorld().getName() : " ") + ")";
 
 		// Send log string to logger
 		plugin.getAdvancedLogger().log(log);
