@@ -24,7 +24,13 @@ public class Logger {
 
     private void initializeWriter() {
 
-        // Get file from path
+        // Create directory
+        File dir = new File(PATH);
+        if (dir.mkdirs()) {
+            this.plugin.getLogger().info("Created log directory " + dir);
+        }
+
+        // Create log file
         this.date = new Timestamp(System.currentTimeMillis()).toString().split(" ")[0];
         File logFile = new File(PATH, date + ".log");
 
