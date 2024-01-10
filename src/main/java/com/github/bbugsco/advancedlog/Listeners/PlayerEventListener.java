@@ -148,7 +148,7 @@ public class PlayerEventListener implements Listener {
 		Player killer = victim.getKiller();
 
 		// Create log
-		String log = LogType.PLAYER_DEATH + " player " +
+		String log = LogType.PLAYER_KILL_PLAYER + " player " +
 				victim.getName() + " killed by " +
 				killer.getName() + " (" +
 				location.getBlockX() + "," +
