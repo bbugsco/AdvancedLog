@@ -13,3 +13,4 @@ log_types:
   PLAYER_PICKUP_ITEM_CHEST: true
   SERVER_START: true
   SERVER_STOP: true
+  PLAYER_CHAT: true

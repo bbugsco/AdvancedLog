@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class PlayerEventListener implements Listener {
 
@@ -159,5 +160,29 @@ public class PlayerEventListener implements Listener {
 		plugin.getAdvancedLogger().log(log);
 
 	}
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+
+        // Check enabled
+        if (!plugin.getLogTypeEnabled(LogType.PLAYER_CHAT)) return;
+
+        // Get required variables
+        Player chatter = event.getPlayer();
+        Location location = chatter.getLocation();
+
+        // Create log
+        String log = LogType.PLAYER_CHAT + " " +
+                chatter.getName() + " >> " +
+                event.getMessage() + " (" +
+                location.getBlockX() + "," +
+                location.getBlockY() + "," +
+                location.getBlockZ() + "@" +
+                (location.getWorld() != null ? location.getWorld().getName() : " ") + ")";
+
+        // Send log string to logger
+        plugin.getAdvancedLogger().log(log);
+
+    }
 
 }
